@@ -18,4 +18,18 @@ class NotaRepository(private val dao: NotaDao, private val werbClient: NotaWebCl
         }
     }
 
+    fun buscaPorId(id: String): Flow<Nota> {
+        return dao.buscaPorId(id)
+
+    }
+
+  suspend fun remove(id: String) {
+        return dao.remove(id)
+    }
+
+    suspend fun salva(nota: Nota) {
+        return dao.salva(nota)
+        werbClient.salvar(nota)
+    }
+
 }
