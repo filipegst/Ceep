@@ -27,25 +27,18 @@ class NotaWebClient {
         }
 
     }
-
-    suspend fun salvar(nota: Nota) {
+    suspend fun salva(nota: Nota): Boolean {
         try {
-            val resposta =
-                notaService.salva(nota.id, NotaRequisicao(
-                nota.titulo,
-                nota.descricao,
-                nota.imagem,
+            val resposta = notaService.salva(nota.id, NotaRequisicao(
+                titulo = nota.titulo,
+                descricao = nota.descricao,
+                imagem = nota.imagem
             ))
-            if (resposta.isSuccessful){
-                Log.i(TAG,"salva: nota salva com suceso")
-            }
-            else {
-                Log.i(TAG,"salva: nota não foi salva")
-            }
+            return resposta.isSuccessful
         } catch (e: Exception) {
-                Log.e(TAG,"salva: falha ao tentar salvar)",e)
+            Log.e(TAG, "salva: falha ao tentar salvar", e)
         }
-
+        return false
     }
 
 }

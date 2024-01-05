@@ -1,4 +1,4 @@
-package br.com.alura.ceep.database.dao.ui.dialog
+package br.com.alura.ceep.ui.dialog
 
 import android.content.Context
 import android.view.LayoutInflater

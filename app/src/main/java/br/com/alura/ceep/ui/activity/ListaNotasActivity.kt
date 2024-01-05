@@ -1,4 +1,4 @@
-package br.com.alura.ceep.database.dao.ui.activity
+package br.com.alura.ceep.ui.activity
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,10 +9,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import br.com.alura.ceep.database.AppDatabase
-import br.com.alura.ceep.database.dao.ui.recyclerview.adapter.ListaNotasAdapter
 import br.com.alura.ceep.databinding.ActivityListaNotasBinding
 import br.com.alura.ceep.extensions.vaiPara
 import br.com.alura.ceep.repository.NotaRepository
+import br.com.alura.ceep.ui.recyclerview.adapter.ListaNotasAdapter
 import br.com.alura.ceep.webclient.services.NotaWebClient
 import kotlinx.coroutines.launch
 
@@ -24,7 +24,6 @@ class ListaNotasActivity : AppCompatActivity() {
     private val adapter by lazy {
         ListaNotasAdapter(this)
     }
-
     private val repository by lazy {
         NotaRepository(
             AppDatabase.instancia(this).notaDao(),
@@ -39,17 +38,16 @@ class ListaNotasActivity : AppCompatActivity() {
         configuraRecyclerView()
         lifecycleScope.launch {
             launch {
-                atualizaTodas()
+                sincroniza()
             }
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 buscaNotas()
             }
         }
-//
     }
 
-    private suspend fun atualizaTodas() {
-        repository.atualizaTodas()
+    private suspend fun sincroniza() {
+        repository.sincroniza()
     }
 
     private fun configuraFab() {

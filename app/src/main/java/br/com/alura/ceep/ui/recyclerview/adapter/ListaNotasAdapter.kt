@@ -1,4 +1,4 @@
-package br.com.alura.ceep.database.dao.ui.recyclerview.adapter
+package br.com.alura.ceep.ui.recyclerview.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

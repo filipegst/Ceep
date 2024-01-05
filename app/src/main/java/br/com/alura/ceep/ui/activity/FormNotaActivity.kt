@@ -1,4 +1,4 @@
-package br.com.alura.ceep.database.dao.ui.activity
+package br.com.alura.ceep.ui.activity
 
 import android.os.Bundle
 import android.util.Log
@@ -13,8 +13,8 @@ import br.com.alura.ceep.database.AppDatabase
 import br.com.alura.ceep.databinding.ActivityFormNotaBinding
 import br.com.alura.ceep.extensions.tentaCarregarImagem
 import br.com.alura.ceep.model.Nota
-import br.com.alura.ceep.database.dao.ui.dialog.FormImagemDialog
 import br.com.alura.ceep.repository.NotaRepository
+import br.com.alura.ceep.ui.dialog.FormImagemDialog
 import br.com.alura.ceep.webclient.services.NotaWebClient
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -25,15 +25,12 @@ class FormNotaActivity : AppCompatActivity() {
         ActivityFormNotaBinding.inflate(layoutInflater)
     }
     private var imagem: MutableStateFlow<String?> = MutableStateFlow(null)
-
     private val repository by lazy {
         NotaRepository(
             AppDatabase.instancia(this).notaDao(),
             NotaWebClient()
         )
-
     }
-
     private var notaId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,7 +64,7 @@ class FormNotaActivity : AppCompatActivity() {
     }
 
     private suspend fun tentaBuscarNota() {
-        notaId?.let {id ->
+        notaId?.let { id ->
             repository.buscaPorId(id)
                 .filterNotNull()
                 .collect { notaEncontrada ->
@@ -77,6 +74,7 @@ class FormNotaActivity : AppCompatActivity() {
                     binding.activityFormNotaDescricao.setText(notaEncontrada.descricao)
                 }
         }
+
     }
 
     private fun tentaCarregarIdDaNota() {
@@ -131,14 +129,14 @@ class FormNotaActivity : AppCompatActivity() {
     private fun criaNota(): Nota {
         val titulo = binding.activityFormNotaTitulo.text.toString()
         val descricao = binding.activityFormNotaDescricao.text.toString()
-        return notaId?.let {id ->
-             Nota(
+        return notaId?.let { id ->
+            Nota(
                 id = id,
                 titulo = titulo,
                 descricao = descricao,
                 imagem = imagem.value
             )
-        }?:Nota (
+        } ?: Nota(
             titulo = titulo,
             descricao = descricao,
             imagem = imagem.value

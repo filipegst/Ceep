@@ -13,10 +13,10 @@
         android:theme="@style/Theme.Ceep"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".database.dao.ui.activity.FormNotaActivity"
+            android:name=".ui.activity.FormNotaActivity"
             android:exported="false" />
         <activity
-            android:name=".database.dao.ui.activity.ListaNotasActivity"
+            android:name=".ui.activity.ListaNotasActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
